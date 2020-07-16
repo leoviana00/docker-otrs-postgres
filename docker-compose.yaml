@@ -1,0 +1,114 @@
+#---------------------------------------------------------------
+#                        Informação
+#---------------------------------------------------------------
+# autor: Leonardo Viana Pereira
+# email: leonardo.viana@armateus.com.br
+# version: 0.1.0
+# Descrição: Ambiente com o otrs, postgresql, grafana e nginx
+# Uma proposta para um gerenciamento de incidentes
+#---------------------------------------------------------------
+
+
+
+version: '3.5'
+services:
+#---------------------------------------------------------------
+# POSTGRESQL
+#---------------------------------------------------------------
+  db-otrs:
+    image: postgres:9.6
+    container_name: pgsql-otrs
+    restart: always
+    environment: 
+      POSTGRES_DB: otrs
+      POSTGRES_USER: otrs
+      POSTGRES_PASSWORD: otrs
+    volumes:
+    - db-otrs-volume:/var/lib/postgresql/data
+    networks: 
+    - backend    
+#---------------------------------------------------------------
+# OTRS
+#---------------------------------------------------------------
+  otrs: 
+    #build: otrs/.
+    image: leoviana00/otrs:6.0.28
+    restart: always
+    container_name: otrs
+    environment:
+      LANGUAGE: pt_BR
+      FQDN: "central.ithappens.local"
+      ADMINEMAIL: "root@localhost"
+      ORGANIZATION: "ITHAPPENS"
+      DB_TYPE: postgres 
+      DB_NAME: otrs
+      DB_USER: otrs
+      DB_PASSWORD: otrs
+      DB_HOST: db-otrs
+    volumes:
+    - otrs-volume:/opt/otrs
+    links:
+    - db-otrs:pgsql-otrs
+    depends_on:
+    - db-otrs
+    networks:
+    - backend
+    - middle
+#---------------------------------------------------------------
+# GRAFANA
+#---------------------------------------------------------------
+  grafana:
+    image: grafana/grafana
+    restart: always
+    container_name: grafana-otrs
+    user: "root"
+    depends_on:
+    - db-otrs
+    environment:
+      GF_SERVER_DOMAIN: localhost:3000
+      GF_SERVER_ROOT_URL: http://localhost:3000/grafana/
+      GF_AUTH_BASIC_ENABLED: "true"
+      GF_AUTH_PROXY_ENABLED: "true"
+      GF_AUTH_PROXY_HEADER_NAME: "X-WEBAUTH-USER"
+      GR_USERS_ALLOW_SIGN_UP: "false"
+      GF_SECURITY_ADMIN_PASSWORD: secret
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app
+    volumes:
+    - grafana-volume:/var/lib/grafana
+    links:
+    - db-otrs:pgsql-otrs
+    networks: 
+    - middle
+    - backend
+#---------------------------------------------------------------
+# NGINX
+#---------------------------------------------------------------
+  nginx:
+    image: leoviana00/nginx-otrs
+    restart: always
+    container_name: nginx-otrs
+    ports:
+     - 443:443
+    links:
+     - otrs:otrs
+     - grafana:grafana-otrs
+    depends_on: 
+     - otrs
+     - grafana
+    networks: 
+     - frontend
+     - middle
+#---------------------------------------------------------------
+# VOLUMES
+#---------------------------------------------------------------
+volumes:
+  otrs-volume:
+  db-otrs-volume:
+  grafana-volume:
+#---------------------------------------------------------------
+# NETWORKS
+#---------------------------------------------------------------
+networks: 
+  frontend: 
+  middle: 
+  backend:
