@@ -27,11 +27,11 @@ https://community.otrs.com
 
 ## VOLUMES PARA PERSISTÊNCIA
  
-docker volume create db-otrs-volume
-docker volume create otrs-volume
-docker volume create grafana-volume
+- docker volume create db-otrs-volume
+- docker volume create otrs-volume
+- docker volume create grafana-volume
  
-/var/lib/docker
+$ /var/lib/docker
 ---
  
 ## RUN OTRS
