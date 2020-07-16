@@ -48,6 +48,8 @@ GitHub.sublime-settings
 ##
 docker/otrs/otrs-*/
 docker/otrs/otrs-*.tar.gz
-nginx/certs-*.*
+nginx/certs-*/
+nginx/certs-*.crt
+nginx/certs-*.key
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,sublimetext
