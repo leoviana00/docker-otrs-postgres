@@ -1,8 +1,4 @@
-#  Ambiente otrs, posgresql, grafana e nginx
-
-## Modelagem do ambiente 
-
-![](/imagem/ambiente-otrs.jpg)
+#  Ambiente otrs, posgresql e grafana 
 
 
     # ((OTRS)) Community Edition 6.0.28
