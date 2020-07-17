@@ -20,10 +20,6 @@ https://community.otrs.com
 
 
 ---
-## networks: 
-     frontend: 
-     middle: 
-     backend:
 
 ## VOLUMES PARA PERSISTÊNCIA
  
@@ -74,4 +70,18 @@ $ chmod +x entrepoint.sh
 
 $ ./entrepoint.sh
 
+# ----------------------------------------------------
+# Configuração OTRS
+# ----------------------------------------------------
+
+# Email (central.ithappens@outlook.com)
+
+- Entrada
+  - imaps
+  - imap-mail.outlook.com
+
+- Saída
+  - smtptls
+  - smtp.live.com
+  - 587
 

@@ -4,7 +4,7 @@
 # autor: Leonardo Viana Pereira
 # email: leonardo.viana@armateus.com.br
 # version: 0.1.0
-# Descrição: Ambiente com o otrs, postgresql, grafana e nginx
+# Descrição: Ambiente com o otrs, postgresql e grafana
 # Uma proposta para um gerenciamento de incidentes
 #---------------------------------------------------------------
 
@@ -24,9 +24,12 @@ services:
       POSTGRES_USER: otrs
       POSTGRES_PASSWORD: otrs
     volumes:
-    - db-otrs-volume:/var/lib/postgresql/data
-    networks: 
-    - backend    
+    - pgsql-otrs-volume:/var/lib/postgresql/data
+    networks:
+      default:
+        aliases:
+          - server
+   
 #---------------------------------------------------------------
 # OTRS
 #---------------------------------------------------------------
@@ -52,63 +55,38 @@ services:
     depends_on:
     - db-otrs
     networks:
-    - backend
-    - middle
+      default:
+        aliases:
+          - server
+
 #---------------------------------------------------------------
 # GRAFANA
 #---------------------------------------------------------------
-  grafana:
+  grafana-otrs:
     image: grafana/grafana
-    restart: always
-    container_name: grafana-otrs
+    restart: unless-stopped
     user: "root"
-    depends_on:
-    - db-otrs
+    container_name: grafana-otrs
     environment:
-      GF_SERVER_DOMAIN: localhost:3000
-      GF_SERVER_ROOT_URL: http://localhost:3000/grafana/
-      GF_AUTH_BASIC_ENABLED: "true"
-      GF_AUTH_PROXY_ENABLED: "true"
-      GF_AUTH_PROXY_HEADER_NAME: "X-WEBAUTH-USER"
-      GR_USERS_ALLOW_SIGN_UP: "false"
-      GF_SECURITY_ADMIN_PASSWORD: secret
-      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app
+        GF_INSTALL_PLUGINS: grafana-clock-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app,grafana-simple-json-datasource,grafana-piechart-panel
+        GF_SERVER_PROTOCOL: http
+        GF_SERVER_HTTP_PORT: 3000
+    depends_on:
+    - db-otrs 
     volumes:
     - grafana-volume:/var/lib/grafana
     links:
     - db-otrs:pgsql-otrs
-    networks: 
-    - middle
-    - backend
-#---------------------------------------------------------------
-# NGINX
-#---------------------------------------------------------------
-  nginx:
-    image: leoviana00/nginx-otrs
-    restart: always
-    container_name: nginx-otrs
-    ports:
-     - 443:443
-    links:
-     - otrs:otrs
-     - grafana:grafana-otrs
-    depends_on: 
-     - otrs
-     - grafana
-    networks: 
-     - frontend
-     - middle
-#---------------------------------------------------------------
-# VOLUMES
-#---------------------------------------------------------------
+    networks:
+      default:
+        aliases:
+          - server
+
+#------------------------------------------------------ 
 volumes:
   otrs-volume:
-  db-otrs-volume:
+  pgsql-otrs-volume:
   grafana-volume:
-#---------------------------------------------------------------
-# NETWORKS
-#---------------------------------------------------------------
-networks: 
-  frontend: 
-  middle: 
-  backend:
+
+  
+
