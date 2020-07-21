@@ -25,17 +25,16 @@ https://community.otrs.com
  
 $ /var/lib/docker
 ---
- 
-## RUN OTRS
+## 1 - RUN PGSQL
+docker run -d --name=db-otrs -v db-otrs-volume:/var/lib/postgresql/data leoviana00/postgres-otrs
+
+## 2 - RUN OTRS
 docker run -d --name otrs --link db-otrs:db-otrs -v otrs-volume:/opt/otrs -e DBHOST="db-otrs" leoviana00/otrs:6.0.28
  
-## RUN PGSQL
-docker run -d --name=db-otrs -v db-otrs-volume:/var/lib/postgresql/data leoviana00/postgres-otrs
- 
-## RUN GRAFANA
-docker run -d --name=grafana --restart always --link db-otrs:db-otrs -p 3000:3000 -e "GF_INSTALL_PLUGINS=grafana-clock-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app" -e "GF_SERVER_PROTOCOL=http" -e "GF_SERVER_HTTP_PORT=3000" -v grafana-volume:/var/lib/grafana grafana/grafana
+## 3 - RUN GRAFANA
+docker run -d --name=grafana --restart always --link db-otrs:db-otrs -p 3000:3000 -e "GF_INSTALL_PLUGINS=grafana-clock-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app,grafana-simple-json-datasource,grafana-piechart-panelp" -e "GF_SERVER_PROTOCOL=http" -e "GF_SERVER_HTTP_PORT=3000" -v grafana-volume:/var/lib/grafana grafana/grafana
 
- 
+
 ##--------------------------------------------------
 
 - IP_OTRS/otrs/installer.pl 
