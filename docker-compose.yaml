@@ -23,8 +23,10 @@ services:
       POSTGRES_DB: otrs
       POSTGRES_USER: otrs
       POSTGRES_PASSWORD: otrs
+    ports:
+    - 5432:5432
     volumes:
-    - pgsql-otrs-volume:/var/lib/postgresql/data
+    - pgsql-volume:/var/lib/postgresql/data
     networks:
       default:
         aliases:
@@ -48,6 +50,8 @@ services:
       DB_USER: otrs
       DB_PASSWORD: otrs
       DB_HOST: db-otrs
+    ports:
+    - 80:80
     volumes:
     - otrs-volume:/opt/otrs
     links:
@@ -63,7 +67,7 @@ services:
 # GRAFANA
 #---------------------------------------------------------------
   grafana-otrs:
-    image: grafana/grafana
+    image: grafana/grafana:6.5.2
     restart: unless-stopped
     user: "root"
     container_name: grafana
@@ -71,6 +75,8 @@ services:
         GF_INSTALL_PLUGINS: grafana-clock-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app,grafana-simple-json-datasource,grafana-piechart-panel
         GF_SERVER_PROTOCOL: http
         GF_SERVER_HTTP_PORT: 3000
+    ports:
+    - 3000:3000
     depends_on:
     - db-otrs 
     volumes:
@@ -85,7 +91,7 @@ services:
 #------------------------------------------------------ 
 volumes:
   otrs-volume:
-  pgsql-otrs-volume:
+  pgsql-volume:
   grafana-volume:
 
   

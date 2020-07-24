@@ -26,13 +26,13 @@ https://community.otrs.com
 $ /var/lib/docker
 ---
 ## 1 - RUN PGSQL
-docker run -d --name=db-otrs -v db-otrs-volume:/var/lib/postgresql/data leoviana00/postgres-otrs
+docker run -d --name=db-otrs -p 5432:5432 -v db-otrs-volume:/var/lib/postgresql/data leoviana00/postgres-otrs
 
 ## 2 - RUN OTRS
 docker run -d --name otrs --link db-otrs:db-otrs -v otrs-volume:/opt/otrs -e DBHOST="db-otrs" leoviana00/otrs:6.0.28
  
 ## 3 - RUN GRAFANA
-docker run -d --name=grafana --restart=always --link db-otrs:db-otrs -p 3000:3000 -e "GF_INSTALL_PLUGINS=grafana-clock-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app,grafana-simple-json-datasource,grafana-piechart-panel" -e "GF_SERVER_PROTOCOL=http" -e "GF_SERVER_HTTP_PORT=3000" -v grafana-volume:/var/lib/grafana grafana/grafana
+docker run -d --name=grafana --restart=always --link db-otrs:db-otrs -p 3000:3000 -e "GF_INSTALL_PLUGINS=grafana-clock-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app,grafana-simple-json-datasource,grafana-image-renderer,grafana-piechart-panel" -e "GF_SERVER_PROTOCOL=http" -e "GF_SERVER_HTTP_PORT=3000" -v grafana-volume:/var/lib/grafana grafana/grafana:6.5.2
 
 
 ##--------------------------------------------------
@@ -85,3 +85,8 @@ $ ./entrepoint.sh
 # Atualizar restart de um container
 
 $ docker update --restart=always <container>
+
+
+
+
+
