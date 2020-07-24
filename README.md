@@ -32,7 +32,11 @@ docker run -d --name=db-otrs -p 5432:5432 -v db-otrs-volume:/var/lib/postgresql/
 docker run -d --name otrs --link db-otrs:db-otrs -v otrs-volume:/opt/otrs -e DBHOST="db-otrs" leoviana00/otrs:6.0.28
  
 ## 3 - RUN GRAFANA
+<<<<<<< HEAD
 docker run -d --name=grafana --restart=always --link db-otrs:db-otrs -p 3000:3000 -e "GF_INSTALL_PLUGINS=grafana-clock-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app,grafana-simple-json-datasource,grafana-image-renderer,grafana-piechart-panel" -e "GF_SERVER_PROTOCOL=http" -e "GF_SERVER_HTTP_PORT=3000" -v grafana-volume:/var/lib/grafana grafana/grafana:6.5.2
+=======
+docker run -d --name=grafana --restart=always --link db-otrs:db-otrs -p 3000:3000 -e "GF_INSTALL_PLUGINS=grafana-clock-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app,grafana-simple-json-datasource,grafana-piechart-panel" -e "GF_SERVER_PROTOCOL=http" -e "GF_SERVER_HTTP_PORT=3000" -v grafana-volume:/var/lib/grafana grafana/grafana:6.5.2
+>>>>>>> 2f20529975c1ca7085d53a4a08bdf6437cad03ef
 
 
 ##--------------------------------------------------
