@@ -65,22 +65,6 @@ $ chmod +x entrepoint.sh
 
 $ ./entrepoint.sh
 
-# ----------------------------------------------------
-# Configuração OTRS
-# ----------------------------------------------------
-
-# Email (central.ithappens@outlook.com)
-
-- Entrada
-  - imaps
-  - imap-mail.outlook.com
-
-- Saída
-  - smtptls
-  - smtp.live.com
-  - 587
-
----
 
 # Atualizar restart de um container
 
