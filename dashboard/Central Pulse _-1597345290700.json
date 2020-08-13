@@ -44,7 +44,7 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 8,
         "x": 0,
         "y": 0
@@ -158,7 +158,7 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 8,
         "x": 8,
         "y": 0
@@ -207,7 +207,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select count(*) as cont from ticket where ticket_state_id in (1,4);",
+          "rawSql": "select count(*) as cont from ticket where ticket_state_id in (4);",
           "refId": "A",
           "select": [
             [
@@ -267,7 +267,7 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 8,
         "x": 16,
         "y": 0
@@ -353,14 +353,14 @@
     },
     {
       "columns": [],
-      "datasource": "PostgreSQL",
+      "datasource": "db-otrs",
       "description": "Mostrará os compromissos registrados no calendário",
       "fontSize": "130%",
       "gridPos": {
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 10
+        "y": 9
       },
       "id": 8,
       "links": [],
@@ -453,7 +453,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 10
+        "y": 9
       },
       "id": 18,
       "links": [],
@@ -521,181 +521,99 @@
       "type": "table"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "10s",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "1m",
+        "frequency": "30s",
+        "handler": 1,
+        "message": "Novo status de solicitação de serviço na fila DevOps\nURL: http://10.0.3.100/otrs/index.pl?",
+        "name": "DevOps",
+        "noDataState": "ok",
+        "notifications": [
+          {
+            "uid": "kZ33OZVGk"
+          }
+        ]
       },
+      "aliasColors": {},
+      "bars": true,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "decimals": 0,
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
-        "h": 3,
-        "w": 2,
+        "h": 4,
+        "w": 8,
         "x": 16,
-        "y": 10
+        "y": 9
       },
-      "id": 13,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "pluginVersion": "7.1.0",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": " select count(*) as cont from ticket where ticket_state_id in (1,4) and queue_id in (5);\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Central",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 18,
-        "y": 10
-      },
+      "hiddenSeries": false,
       "id": 14,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "pluginVersion": "7.1.0",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": true,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
       },
-      "tableColumn": "",
+      "lines": false,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "7.1.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
-          "format": "table",
+          "format": "time_series",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": " select count(*) as cont from ticket where ticket_state_id in (1,4) and queue_id in (6);\n",
+          "rawSql": "SELECT\n  avg(id) AS \"time\",\n  customer_id AS metric,\n  count(ticket_state_id)\nFROM ticket\nWHERE\n  ticket_state_id = 1 \n  and queue_id in (6)\nGROUP BY ticket_state_id,2\nORDER BY avg (id)\n",
           "refId": "A",
           "select": [
             [
@@ -717,232 +635,58 @@
           ]
         }
       ],
-      "thresholds": "",
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 0
+        }
+      ],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "DevOps",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 20,
-        "y": 10
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "series",
+        "name": null,
+        "show": true,
+        "values": [
+          "total"
+        ]
       },
-      "id": 15,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
+      "yaxes": [
         {
-          "name": "value to text",
-          "value": 1
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
         },
         {
-          "name": "range to text",
-          "value": 2
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
         }
       ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "pluginVersion": "7.1.0",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": " select count(*) as cont from ticket where ticket_state_id in (1,4) and queue_id in (7);\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "SysAdmin",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 22,
-        "y": 10
-      },
-      "id": 16,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "pluginVersion": "7.1.0",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": " select count(*) as cont from ticket where ticket_state_id in (1,4) and queue_id in (8);\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "DBA",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "alert": {
@@ -976,49 +720,42 @@
         "for": "1m",
         "frequency": "30s",
         "handler": 1,
-        "message": "Novo status de solicitação de serviço",
-        "name": "Alerta de tickets",
+        "message": "Novo status de solicitação de serviço na fila SysAdmin\nURL: http://10.0.3.100/otrs/index.pl?",
+        "name": "SysAdmin",
         "noDataState": "ok",
         "notifications": []
       },
       "aliasColors": {},
       "bars": true,
+      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
       "decimals": 0,
-      "description": "Envio de alerta ao telegram acusando que tem uma solicitação a ser tratada, apos as solicitações serem classificadas um novo alerta é enviado com status de ok",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 5,
-        "w": 8,
+        "h": 4,
+        "w": 4,
         "x": 16,
         "y": 13
       },
       "hiddenSeries": false,
-      "id": 20,
+      "id": 15,
       "legend": {
-        "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "hideEmpty": false,
+        "hideZero": false,
         "max": false,
         "min": false,
-        "rightSide": false,
         "show": true,
-        "total": true,
+        "total": false,
         "values": true
       },
       "lines": false,
       "linewidth": 1,
+      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -1038,7 +775,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  avg(id) AS \"time\",\n  customer_id AS metric,\n  count(ticket_state_id)\nFROM ticket\nWHERE\n  ticket_state_id = 1\nGROUP BY ticket_state_id,2\nORDER BY avg (id)\n",
+          "rawSql": "SELECT\n  avg(id) AS \"time\",\n  customer_id AS metric,\n  count(ticket_state_id)\nFROM ticket\nWHERE\n  ticket_state_id = 1 \n  and queue_id in (7)\nGROUP BY ticket_state_id,2\nORDER BY avg (id)\n",
           "refId": "A",
           "select": [
             [
@@ -1066,20 +803,18 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 0,
-          "yaxis": "left"
+          "value": 0
         }
       ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Alerta de tickets",
+      "title": "SysAdmin",
       "tooltip": {
         "shared": false,
         "sort": 0,
         "value_type": "individual"
       },
-      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -1087,7 +822,7 @@
         "name": null,
         "show": true,
         "values": [
-          "current"
+          "total"
         ]
       },
       "yaxes": [
@@ -1101,16 +836,179 @@
           "show": true
         },
         {
+          "decimals": 0,
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
         }
       ],
       "yaxis": {
-        "align": true,
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "10s",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "1m",
+        "frequency": "30s",
+        "handler": 1,
+        "message": "Novo status de solicitação de serviço na fila DBA\nURL: http://10.0.3.100/otrs/index.pl?",
+        "name": "DBA",
+        "noDataState": "ok",
+        "notifications": []
+      },
+      "aliasColors": {},
+      "bars": true,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "decimals": 0,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 13
+      },
+      "hiddenSeries": false,
+      "id": 16,
+      "legend": {
+        "avg": false,
+        "current": true,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "7.1.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  avg(id) AS \"time\",\n  customer_id AS metric,\n  count(ticket_state_id)\nFROM ticket\nWHERE\n  ticket_state_id = 1 \n  and queue_id in (8)\nGROUP BY ticket_state_id,2\nORDER BY avg (id)\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 0
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "DBA",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "series",
+        "name": null,
+        "show": true,
+        "values": [
+          "total"
+        ]
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
         "alignLevel": null
       }
     },
@@ -1120,10 +1018,10 @@
       "description": "Após passar o tempo de 15 minutos sem envio de resposta de atendimento inicial, o ticket aparecerá nesse quadro.",
       "fontSize": "150%",
       "gridPos": {
-        "h": 6,
+        "h": 4,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 17
       },
       "id": 11,
       "links": [],
@@ -1242,7 +1140,7 @@
       "type": "table"
     }
   ],
-  "refresh": false,
+  "refresh": "10s",
   "schemaVersion": 21,
   "style": "dark",
   "tags": [],
@@ -1250,8 +1148,8 @@
     "list": []
   },
   "time": {
-    "from": "1970-01-01T00:00:00.006Z",
-    "to": "1970-01-01T00:00:00.006Z"
+    "from": "now-12h",
+    "to": "now-5s"
   },
   "timepicker": {
     "nowDelay": "5s",
@@ -1279,7 +1177,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Central It Happens",
+  "title": "Central Pulse ~",
   "uid": "Zp7VN1nGz",
-  "version": 16
+  "version": 58
 }
