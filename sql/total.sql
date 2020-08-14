@@ -16,11 +16,11 @@ where
 	t.ticket_state_id = ts.id and 
 	ts.id in ($state) and
 	
-	t.create_time BETWEEN '2020-07-01' and '2020-07-31' and
+	t.create_time BETWEEN '2020-01-01' and '2020-12-31' and
+	
+	date_part('month', t.create_time) IN ($MES) and
 	
 	$__timeFilter(t.create_time)
 group by 
 	
 	t.create_time
-order by 
-	JULHO desc 

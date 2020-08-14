@@ -1,6 +1,6 @@
 select 
   u.login, 
-  count(t.id) tickets
+  count(t.id) "TICKETS"
 from 
   ticket t, 
   queue q, 
@@ -14,6 +14,8 @@ where
   u.id = t.responsible_user_id and 
   q.id = t.queue_id and
   q.id in ($queue) and
+  
+  date_part('month', t.create_time) IN ($MES) and
   
   t.ticket_state_id in ($state) 
 group by u.login

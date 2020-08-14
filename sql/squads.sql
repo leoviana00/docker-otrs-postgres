@@ -17,6 +17,8 @@ where
 	t.ticket_state_id = ts.id and 
 	ts.id in ($state) and
 	
+	date_part('month', t.create_time) IN ($MES) and
+	
 	
 	$__timeFilter(t.create_time)
 group by 
@@ -25,3 +27,4 @@ group by
 	t.create_time
 order by 
 	TICKETS desc 
+

@@ -15,6 +15,7 @@ where
 	t.queue_id = q.id and
 	t.ticket_state_id = ts.id and
 	q.id in ($queue) and
+	date_part('month', t.create_time) IN ($MES) and
 	ts.id in ($state)
 group by
 	sv.name
