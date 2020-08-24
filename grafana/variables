@@ -1,0 +1,5 @@
+# select name as __text, id as __value  from ticket_state
+# select name as __text, id  as __value from queue 
+# select name as __text, customer_id as __value  from customer_company
+# select name as __text, id as __value  from ticket_type
+# 01,02,03,04,05,06,07,08,09,10,11,12
