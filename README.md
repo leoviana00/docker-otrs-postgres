@@ -1,6 +1,6 @@
 #  Project
 
-- Gerenciamento de incidentes: Docker, OTRS e Postgres
+- Gerenciamento de incidentes: Docker, OTRS, Postgres e Grafana
 
 
     ### ((OTRS)) Community Edition 6.0.28
