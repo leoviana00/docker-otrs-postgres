@@ -1,4 +1,6 @@
-#  Ambiente otrs, posgresql e grafana 
+#  Project
+
+- Gerenciamento de incidentes: Docker, OTRS e Postgres
 
 
     ### ((OTRS)) Community Edition 6.0.28
@@ -15,28 +17,32 @@ https://community.otrs.com
 
 
 
----
 
 ## VOLUMES PARA PERSISTÊNCIA
- 
+```
 - docker volume create db-otrs-volume
 - docker volume create otrs-volume
 - docker volume create grafana-volume
- 
+```
+## Localização dos volumes
+```
 $ /var/lib/docker
----
-## 1 - RUN PGSQL
+```
+## Step 1 - RUN PGSQL
+```
 docker run -d --name=db-otrs -p 5432:5432 -v db-otrs-volume:/var/lib/postgresql/data leoviana00/postgres-otrs
-
-## 2 - RUN OTRS
+```
+## Step 2 - RUN OTRS
+```
 docker run -d --name otrs --link db-otrs:db-otrs -v otrs-volume:/opt/otrs -e DBHOST="db-otrs" leoviana00/otrs:6.0.28
- 
-## 3 - RUN GRAFANA
+``` 
+## Step 3 - RUN GRAFANA
+```
 docker run -d --name=grafana --restart=always --link db-otrs:db-otrs -p 3000:3000 -e "GF_INSTALL_PLUGINS=grafana-clock-panel,briangann-gauge-panel,alexanderzobnin-zabbix-app,grafana-simple-json-datasource,grafana-piechart-panel" -e "GF_SERVER_PROTOCOL=http" -e "GF_SERVER_HTTP_PORT=3000" -v grafana-volume:/var/lib/grafana grafana/grafana:6.5.2
+```
 
-
-##--------------------------------------------------
-
+## Endereços:
+```
 - IP_OTRS/otrs/installer.pl 
 
 - IP_OTRS/otrs/customer.pl
@@ -44,15 +50,20 @@ docker run -d --name=grafana --restart=always --link db-otrs:db-otrs -p 3000:300
 - IP_OTRS/otrs/index.pl
 
 - ip_grafana:3000
+```
 
-##--------------------------------------------------
-
+## Inspecionando o Container
+```
 docker inspect otrs
+```
 
+## Acessando a aplicação OTRS
+```
 http://ip-container-otrs/otrs/installer.pl
+```
 
-# Acessando o container
-
+## Instalando alguns módulos - Acessando o container
+```
 $ docker exec -it otrs /bash/bin
 
 $ cd scripts
@@ -64,12 +75,12 @@ $ ./install_modeules.sh all
 $ chmod +x entrepoint.sh
 
 $ ./entrepoint.sh
-
+```
 
 # Atualizar restart de um container
-
+```
 $ docker update --restart=always <container>
-
+```
 
 
 
